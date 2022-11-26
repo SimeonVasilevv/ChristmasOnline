@@ -13,8 +13,8 @@ namespace ChristmasOnlineWeb.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>()
-                .Property(c => c.DisplayOrder)
-                .ValueGeneratedOnAdd();
+                .HasIndex(c => c.Name)
+                .IsUnique();
         }
         public DbSet<Category> Categories { get; set; }
     }

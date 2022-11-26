@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChristmasOnlineWeb.Models
 {
@@ -9,7 +10,10 @@ namespace ChristmasOnlineWeb.Models
         [Required]
         [StringLength(40,MinimumLength = 4,ErrorMessage ="{0} must be between {2} and {1} symbols")]
         public string Name { get; set; }
-        public int DisplayOrder { get; set; }
+        //[DisplayName("Display Order")]
+        //public int DisplayOrder { get; set; }
+       
+        [DisplayName("Created On")]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
 }

@@ -17,5 +17,31 @@ namespace ChristmasOnlineWeb.Controllers
             IEnumerable<Category> categoryList = _db.Categories;
             return View(categoryList);
         }
+
+        //GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if (_db.Categories.FirstOrDefault(c=>c.Name == category.Name) != null)
+            {
+                ModelState.AddModelError("name", $"Category \"{category.Name}\" already exists.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
+        }
     }
 }

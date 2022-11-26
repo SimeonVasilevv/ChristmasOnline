@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChristmasOnlineWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221126092008_addCategoriesToDb")]
-    partial class addCategoriesToDb
+    [Migration("20221126210010_CategoryTableAdded")]
+    partial class CategoryTableAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,10 @@ namespace ChristmasOnlineWeb.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DisplayOrder")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisplayOrder"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -42,6 +45,9 @@ namespace ChristmasOnlineWeb.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DisplayOrder")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });

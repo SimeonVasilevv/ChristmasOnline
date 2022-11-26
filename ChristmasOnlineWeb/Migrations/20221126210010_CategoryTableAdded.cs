@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChristmasOnlineWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class addCategoriesToDb : Migration
+    public partial class CategoryTableAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,13 +17,20 @@ namespace ChristmasOnlineWeb.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_DisplayOrder",
+                table: "Categories",
+                column: "DisplayOrder",
+                unique: true);
         }
 
         /// <inheritdoc />

@@ -9,6 +9,13 @@ namespace ChristmasOnlineWeb.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Category>()
+                .Property(c => c.DisplayOrder)
+                .ValueGeneratedOnAdd();
+        }
         public DbSet<Category> Categories { get; set; }
     }
 }

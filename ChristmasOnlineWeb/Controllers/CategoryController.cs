@@ -2,6 +2,7 @@
 using ChristmasOnlineWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ChristmasOnlineWeb.Controllers
 {
@@ -30,7 +31,7 @@ namespace ChristmasOnlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
         {
-            if (_db.Categories.FirstOrDefault(c=>c.Name == category.Name) != null)
+            if (_db.Categories.FirstOrDefault(c => c.Name == category.Name) != null)
             {
                 ModelState.AddModelError("name", $"Category \"{category.Name}\" already exists.");
             }
@@ -48,7 +49,7 @@ namespace ChristmasOnlineWeb.Controllers
         //GET
         public IActionResult Edit(string? id)
         {
-            if (id == null || id==string.Empty)
+            if (id == null || id == string.Empty)
             {
                 return NotFound();
             }
@@ -64,6 +65,7 @@ namespace ChristmasOnlineWeb.Controllers
 
         //POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
         {
             if (_db.Categories.FirstOrDefault(c => c.Name == category.Name) != null)
@@ -80,5 +82,40 @@ namespace ChristmasOnlineWeb.Controllers
 
             return View(category);
         }
+
+        //GET
+        public IActionResult Delete(string? id)
+        {
+            if (id == null || id == string.Empty)
+            {
+                return NotFound();
+            }
+
+            Category category = _db.Categories.Find(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        //POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(string? id)
+        {
+            var categoryToDelete = _db.Categories.Find(id);
+
+            if (categoryToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(categoryToDelete);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

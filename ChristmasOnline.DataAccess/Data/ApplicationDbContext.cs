@@ -1,7 +1,7 @@
-﻿using ChristmasOnlineWeb.Models;
+﻿using ChristmasOnline.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChristmasOnlineWeb.Data
+namespace ChristmasOnline.DataAccess
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,4 +1,4 @@
-namespace ChristmasOnlineWeb.Models
+namespace ChristmasOnline.Models
 {
     public class ErrorViewModel
     {

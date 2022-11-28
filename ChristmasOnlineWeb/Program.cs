@@ -1,4 +1,4 @@
-using ChristmasOnlineWeb.Data;
+using ChristmasOnline.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

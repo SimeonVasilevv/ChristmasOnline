@@ -1,22 +1,20 @@
-﻿using ChristmasOnline.DataAccess;
+﻿using ChristmasOnline.DataAccess.Repository.IRepository;
 using ChristmasOnline.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ChristmasOnlineWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> categoryList = _db.Categories;
+            IEnumerable<Category> categoryList = _unitOfWork.Category.GetAll();
             return View(categoryList);
         }
 
@@ -31,15 +29,15 @@ namespace ChristmasOnlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
         {
-            if (_db.Categories.FirstOrDefault(c => c.Name == category.Name) != null)
+            if (_unitOfWork.Category.GetFirstOrDefault(c => c.Name == category.Name) != null)
             {
                 ModelState.AddModelError("name", $"Category \"{category.Name}\" already exists.");
             }
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
-                _db.SaveChanges();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully!";
                 return RedirectToAction("Index");
             }
@@ -55,7 +53,7 @@ namespace ChristmasOnlineWeb.Controllers
                 return NotFound();
             }
 
-            Category category = _db.Categories.Find(id);
+            Category category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id==id);
 
             if (category == null)
             {
@@ -69,15 +67,15 @@ namespace ChristmasOnlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
         {
-            if (_db.Categories.FirstOrDefault(c => c.Name == category.Name) != null)
+            if (_unitOfWork.Category.GetFirstOrDefault(c => c.Name == category.Name) != null)
             {
                 ModelState.AddModelError("name", $"Category \"{category.Name}\" already exists.");
             }
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
-                _db.SaveChanges();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully!";
                 return RedirectToAction("Index");
             }
@@ -93,7 +91,7 @@ namespace ChristmasOnlineWeb.Controllers
                 return NotFound();
             }
 
-            Category category = _db.Categories.Find(id);
+            Category category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
 
             if (category == null)
             {
@@ -107,15 +105,15 @@ namespace ChristmasOnlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(string? id)
         {
-            var categoryToDelete = _db.Categories.Find(id);
+            var categoryToDelete = _unitOfWork.Category.GetFirstOrDefault(c=>c.Id==id);
 
             if (categoryToDelete == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(categoryToDelete);
-            _db.SaveChanges();
+            _unitOfWork.Category.Remove(categoryToDelete);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }

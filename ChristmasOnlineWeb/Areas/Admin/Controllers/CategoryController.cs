@@ -2,7 +2,7 @@
 using ChristmasOnline.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ChristmasOnlineWeb.Controllers
+namespace ChristmasOnlineWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -53,7 +53,7 @@ namespace ChristmasOnlineWeb.Controllers
                 return NotFound();
             }
 
-            Category category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id==id);
+            Category category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
 
             if (category == null)
             {
@@ -105,7 +105,7 @@ namespace ChristmasOnlineWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(string? id)
         {
-            var categoryToDelete = _unitOfWork.Category.GetFirstOrDefault(c=>c.Id==id);
+            var categoryToDelete = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
 
             if (categoryToDelete == null)
             {

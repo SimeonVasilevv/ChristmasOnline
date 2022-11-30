@@ -40,7 +40,7 @@ namespace ChristmasOnlineWeb.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ChristmasOnline.Models.Material", b =>
@@ -58,7 +58,7 @@ namespace ChristmasOnlineWeb.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 #pragma warning restore 612, 618
         }

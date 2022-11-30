@@ -9,19 +9,22 @@ namespace ChristmasOnline.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _db;
 
         public UnitOfWork(ApplicationDbContext context)
         {
-            _context = context;
-            Category = new CategoryRepository(_context);
+            _db = context;
+            Category = new CategoryRepository(_db);
+            Material = new MaterialRepository(_db);
         }
 
         public ICategoryRepository Category { get; private set; }
 
+        public IMaterialRepository Material { get; private set; }
+
         public void Save()
         {
-            _context.SaveChanges();
+            _db.SaveChanges();
         }
     }
 }

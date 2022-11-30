@@ -8,20 +8,19 @@ using System.Threading.Tasks;
 
 namespace ChristmasOnline.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class MaterialRepository : Repository<Material>, IMaterialRepository
     {
         private ApplicationDbContext _db;
 
-        public CategoryRepository(ApplicationDbContext context)
+        public MaterialRepository(ApplicationDbContext context)
             :base(context)
         {
-            _db = context;
+           _db = context;
         }
 
-
-        public void Update(Category category)
+        public void Update(Material material)
         {
-            _db.Categories.Update(category);
+            _db.Materials.Update(material);
         }
     }
 }

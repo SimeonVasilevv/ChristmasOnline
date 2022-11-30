@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChristmasOnline.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace ChristmasOnline.DataAccess.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface IMaterialRepository : IRepository<Material>
     {
-        ICategoryRepository Category { get; }
-        IMaterialRepository Material { get; }
-
-        void Save();
-
+        void Update(Material material);
     }
 }

@@ -19,9 +19,15 @@ namespace ChristmasOnline.DataAccess
             builder.Entity<Material>()
                 .HasIndex(m => m.Name)
                 .IsUnique();
+
+            builder.Entity<Product>()
+                .HasIndex(p => p.Barcode)
+                .IsUnique();
         }
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Material> Materials { get; set; }
+
+        public DbSet<Product> Products { get; set; }
     }
 }

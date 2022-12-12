@@ -10,6 +10,7 @@ namespace ChristmasOnline.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IMaterialRepository Material { get; }
+        IProductRepository Product { get; }
 
         void Save();
 

@@ -38,6 +38,7 @@ namespace ChristmasOnline.Models
 
         [Required]
         [RegularExpression(@"^[0-9]{13}$",ErrorMessage ="{0} must be exactly 13 characters long.")]
+        [StringLength(13,MinimumLength =13,ErrorMessage = "{0} must be exactly 13 characters long.")]
         public string Barcode { get; set; }
 
         public string CategoryId { get; set; }

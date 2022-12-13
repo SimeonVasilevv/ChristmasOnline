@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChristmasOnline.Models
@@ -34,6 +35,7 @@ namespace ChristmasOnline.Models
 
         [Required]
         [StringLength(200)]
+        [ValidateNever]
         public string ImageUrl { get; set; }
 
         [Required]
@@ -42,9 +44,13 @@ namespace ChristmasOnline.Models
         public string Barcode { get; set; }
 
         public string CategoryId { get; set; }
+
+        [ValidateNever]
         public Category Category { get; set; }
 
         public string MaterialId { get; set; }
+
+        [ValidateNever]
         public Material Material { get; set; }
 
 
